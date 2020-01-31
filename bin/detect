@@ -1,0 +1,10 @@
+#!/bin/sh
+
+npm -v
+if [ $? -eq 0 ]
+then
+  exit 0
+else
+  echo "NPM not installed"
+  exit -1
+fi

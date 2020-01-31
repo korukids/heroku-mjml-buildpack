@@ -1,0 +1,17 @@
+#!/bin/bash
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+echo '==================== INSTALLING MJML ===================='
+
+cd $BUILD_DIR
+
+MJML=$(grep -oP "^mjml@(\d+\.?)+" yarn.lock)
+if [ -z "$MJML" ]
+then
+  npm install -g mjml
+else
+  npm install -g $MJML
+fi
