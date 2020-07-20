@@ -11,7 +11,15 @@ cd $BUILD_DIR
 MJML=$(grep -oP "^mjml@(\d+\.?)+" yarn.lock)
 if [ -z "$MJML" ]
 then
-  npm install -g mjml
+  command -v npm
+  if [ $? -ne 0 ]; then
+    yarn global add mjml
+  fi
+  npm install -g add mjml
 else
-  npm install -g $MJML
+  command -v npm
+  if [ $? -ne 0 ]; then
+    yarn global add $MJML
+  fi
+  npm install -g add $MJML
 fi
