@@ -9,17 +9,21 @@ echo '==================== INSTALLING MJML ===================='
 cd $BUILD_DIR
 
 MJML=$(grep -oP "^mjml@(\d+\.?)+" yarn.lock)
-if [ -z "$MJML" ]
-then
+if [ -z "$MJML" ]; then
+  echo "Installing without version"
   command -v npm
   if [ $? -ne 0 ]; then
+    echo ""
     yarn global add mjml
+  else
+    npm install -g add mjml
   fi
-  npm install -g add mjml
 else
+  echo "Installing with version $MJML"
   command -v npm
   if [ $? -ne 0 ]; then
     yarn global add $MJML
+  else
+    npm install -g add $MJML
   fi
-  npm install -g add $MJML
 fi
