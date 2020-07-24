@@ -13,8 +13,14 @@ if [ -z "$MJML" ]; then
   echo "Installing without version"
   command -v npm
   if [ $? -ne 0 ]; then
-    echo ""
     yarn global add mjml
+
+    echo "Global bin? $(yarn global bin)"
+
+    export PATH="$PATH:$(yarn global bin)"
+
+    command -v mjml
+
   else
     npm install -g add mjml
   fi
@@ -23,7 +29,16 @@ else
   command -v npm
   if [ $? -ne 0 ]; then
     yarn global add $MJML
+
+    echo "Global bin? $(yarn global bin)"
+
+    export PATH="$PATH:$(yarn global bin)"
+
+    command -v mjml
+
   else
     npm install -g add $MJML
   fi
 fi
+
+echo "Exit succesfully regardless of logging"
