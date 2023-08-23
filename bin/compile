@@ -8,37 +8,15 @@ echo '==================== INSTALLING MJML ===================='
 
 cd $BUILD_DIR
 
-MJML=$(grep -oP "^mjml@(\d+\.?)+" yarn.lock)
+MJML=$(grep -A1 "mjml@" yarn.lock | grep -oP '(\d+\.?)+$')
+
 if [ -z "$MJML" ]; then
-  echo "Installing without version"
-  command -v npm
-  if [ $? -ne 0 ]; then
-    yarn global add mjml
-
-    echo "Global bin? $(yarn global bin)"
-
-    export PATH="$PATH:$(yarn global bin)"
-
-    command -v mjml
-
-  else
-    npm install -g add mjml
-  fi
+  echo "Skipping, no version found in yarn.lock"
 else
-  echo "Installing with version $MJML"
+  echo "Installing with version '$MJML'"
   command -v npm
-  if [ $? -ne 0 ]; then
-    yarn global add $MJML
-
-    echo "Global bin? $(yarn global bin)"
-
-    export PATH="$PATH:$(yarn global bin)"
-
-    command -v mjml
-
-  else
-    npm install -g add $MJML
-  fi
+  npm install -g add mjml@$MJML
+  echo "MJML installed to '$(which mjml)'"
 fi
 
 echo "Exit succesfully regardless of logging"
